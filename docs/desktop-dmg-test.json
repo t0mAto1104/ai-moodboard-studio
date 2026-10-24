@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "checks": {
+    "health": true,
+    "frontend": true,
+    "fresh_user_data": true,
+    "mock_search": true,
+    "library": true,
+    "project_save": true,
+    "export_png": true,
+    "attribution_png": true,
+    "export_pdf": true,
+    "attribution_pdf": true,
+    "separate_credential_service": true,
+    "os_keyring": true,
+    "cloud_llm_runtime": true,
+    "visual_runtime": true,
+    "model_absent_by_default": true
+  },
+  "desktop": true,
+  "data_dir": "/private/tmp/moodboard-github-dmg-test-data",
+  "resource_root": "/private/tmp/moodboard-github-dmg-check/AI Mood Board Studio.app/Contents/Frameworks/studio",
+  "architecture": "arm64",
+  "python": "3.12.7"
+}

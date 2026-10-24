@@ -1,0 +1,362 @@
+[
+  {
+    "id": "01-zh",
+    "prompt": "冷色金属工业产品",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "01-en",
+    "prompt": "Cool metallic industrial products",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "02-zh",
+    "prompt": "磨砂玻璃与柔和光线",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "02-en",
+    "prompt": "Frosted glass with soft lighting",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "03-zh",
+    "prompt": "暖色极简陶瓷",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "03-en",
+    "prompt": "Warm minimalist ceramics",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "04-zh",
+    "prompt": "侘寂木质室内",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "04-en",
+    "prompt": "Wabi sabi wooden interiors",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "05-zh",
+    "prompt": "未来主义银色交通工具",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "05-en",
+    "prompt": "Futuristic silver transportation",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "06-zh",
+    "prompt": "低饱和绿色自然材质",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "06-en",
+    "prompt": "Muted green natural materials",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "07-zh",
+    "prompt": "黑白建筑几何",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "07-en",
+    "prompt": "Black and white architectural geometry",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "08-zh",
+    "prompt": "深蓝海洋纹理",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "08-en",
+    "prompt": "Deep blue ocean textures",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "09-zh",
+    "prompt": "橙色复古塑料产品",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "09-en",
+    "prompt": "Orange retro plastic products",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "10-zh",
+    "prompt": "柔和粉色织物",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "10-en",
+    "prompt": "Soft pink textiles",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "11-zh",
+    "prompt": "粗糙混凝土建筑",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "11-en",
+    "prompt": "Rough concrete architecture",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "12-zh",
+    "prompt": "高饱和色彩家具",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "12-en",
+    "prompt": "Highly saturated colorful furniture",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "13-zh",
+    "prompt": "透明玻璃器皿",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "13-en",
+    "prompt": "Transparent glass vessels",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "14-zh",
+    "prompt": "黄铜细节与深色木材",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "14-en",
+    "prompt": "Brass details and dark wood",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "15-zh",
+    "prompt": "白色纸张与折叠结构",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "15-en",
+    "prompt": "White paper and folded structures",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "16-zh",
+    "prompt": "有机曲线石材雕塑",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "16-en",
+    "prompt": "Organic curved stone sculptures",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "17-zh",
+    "prompt": "轻盈蓝色灯光装置",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "17-en",
+    "prompt": "Lightweight blue lighting installations",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "18-zh",
+    "prompt": "自然亚麻与米色空间",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "18-en",
+    "prompt": "Natural linen and beige spaces",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "19-zh",
+    "prompt": "红黑运动产品",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "19-en",
+    "prompt": "Red and black athletic products",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "20-zh",
+    "prompt": "单色灰建筑细节",
+    "language": "zh",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  },
+  {
+    "id": "20-en",
+    "prompt": "Monochrome gray architectural details",
+    "language": "en",
+    "representative_asset_ids": [],
+    "judgments": {},
+    "human_keep_rate": null,
+    "label_status": "awaiting_human_review"
+  }
+]

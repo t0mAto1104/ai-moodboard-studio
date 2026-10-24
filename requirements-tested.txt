@@ -1,0 +1,20 @@
+# Direct dependency versions tested on macOS arm64 / Python 3.12.7
+fastapi==0.161.1
+uvicorn==0.54.0
+pydantic==2.14.1
+httpx==0.28.1
+sqlalchemy==2.0.34
+alembic==1.13.3
+pillow==10.4.0
+numpy==1.26.4
+scikit-image==0.24.0
+imagehash==4.3.2
+keyring==24.3.1
+litellm==1.106.2
+reportlab==4.5.1
+python-multipart==0.0.32
+torch==2.11.0
+transformers==4.57.6
+sentencepiece==0.2.2
+pytest==8.4.2
+pytest-asyncio==0.26.0

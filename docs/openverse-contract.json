@@ -1,0 +1,63 @@
+{
+  "source": "https://api.openverse.org/v1/schema/?format=json",
+  "parameters": [
+    {
+      "in": "query",
+      "name": "page",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "description": "The page of results to retrieve. This parameter is subject to limitations based on authentication and access level. For details, refer to [the authentication documentation](#tag/auth)."
+    },
+    {
+      "in": "query",
+      "name": "page_size",
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 20
+      },
+      "description": "Number of results to return per page. This parameter is subject to limitations based on authentication and access level. For details, refer to [the authentication documentation](#tag/auth)."
+    },
+    {
+      "in": "query",
+      "name": "q",
+      "schema": {
+        "type": "string",
+        "title": "query",
+        "minLength": 1
+      },
+      "description": "A query string that should not exceed 200 characters in length"
+    },
+    {
+      "in": "query",
+      "name": "license",
+      "schema": {
+        "type": "string",
+        "title": "licenses",
+        "minLength": 1
+      },
+      "description": "A comma separated list of licenses; available licenses include: `by`, `by-nc`, `by-nc-nd`, `by-nc-sa`, `by-nd`, `by-sa`, `cc0`, `nc-sampling+`, `pdm`, and `sampling+`."
+    },
+    {
+      "in": "query",
+      "name": "license_type",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "A comma separated list of license types; available license types include: `all`, `all-cc`, `commercial`, and `modification`."
+    },
+    {
+      "in": "query",
+      "name": "mature",
+      "schema": {
+        "type": "boolean",
+        "default": false
+      },
+      "description": "Whether to include sensitive content."
+    }
+  ]
+}

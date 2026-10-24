@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "source": "explicit procedural Mock Provider",
+  "vision_requested": false,
+  "device": "unloaded",
+  "model_id": "google/siglip2-base-patch16-224",
+  "revision": "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
+  "selected_count": 6,
+  "stage_seconds": {
+    "search": 0.021566582999867023,
+    "generate": 0.15501558400001159,
+    "export_png": 0.08520016599982227,
+    "export_pdf": 0.11518966699986777
+  },
+  "generation_stats": {
+    "seconds": 0.14505050000002484,
+    "warnings": [],
+    "ranking_mode": "metadata",
+    "input_count": 8,
+    "unique_count": 8
+  },
+  "process_peak_rss_bytes": 144556032,
+  "human_relevance_metrics": null
+}

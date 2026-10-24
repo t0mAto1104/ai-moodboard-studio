@@ -1,0 +1,6 @@
+import{render,screen,fireEvent}from'@testing-library/react';import{it,expect,vi}from'vitest';import{QueryClient,QueryClientProvider}from'@tanstack/react-query';import App from'./App';import{sourceLink}from'./api';import{useEditor}from'./store/editor';
+vi.mock('./canvas/Board',()=>({default:()=>null}));
+vi.stubGlobal('fetch',vi.fn().mockResolvedValue({ok:true,json:async()=>[]}));
+it('renders brief and switches to candidate view',()=>{render(<QueryClientProvider client={new QueryClient()}><App/></QueryClientProvider>);expect(screen.getByLabelText('搜索灵感')).toBeInTheDocument();fireEvent.click(screen.getByRole('button',{name:'新建情绪板'}));expect(screen.getByLabelText('设计需求')).toBeInTheDocument();expect(screen.queryByText('LOCAL FIRST')).not.toBeInTheDocument()});
+it('blocks script source links',()=>{expect(sourceLink('javascript:alert(1)')).toBeUndefined();expect(sourceLink('https://www.artic.edu/artworks/1')).toContain('https:')});
+it('editor modification preserves attribution',()=>{useEditor.getState().setItems([{id:'i',asset_id:'a',kind:'image',x:0,y:0,width:20,height:20,rotation:0,crop:{mode:'contain'},z_index:0,opacity:1,locked:false,text:'',fill:'#fff',attribution_reference:'a'}]);useEditor.getState().edit('i',{x:10});expect(useEditor.getState().items[0].attribution_reference).toBe('a');expect(useEditor.getState().dirty).toBe(true)});

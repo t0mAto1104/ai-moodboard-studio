@@ -1,0 +1,21 @@
+AI Mood Board Studio 0.1.0 — macOS Apple Silicon
+
+将 AI Mood Board Studio.app 拖到 Applications，然后从“应用程序”打开。
+本包包含 Python、Web 界面和推理运行依赖，无需另行安装 Python 或 Node。
+未包含视觉模型权重、开发者 API Key、原有项目或收藏。
+
+首次使用：可直接使用公开图库和规则解析。商业图库及云端 AI 的密钥需要自行配置。
+数据保存在 ~/Library/Application Support/AI Mood Board Studio；密钥保存在系统钥匙串。
+此桌面版使用独立数据目录，不会自动导入开发版项目或密钥。
+
+视觉模型：在设置中“选择文件夹”，连接单独部署的 SigLIP 2 模型目录。
+可使用外接盘；连接前核验固定版本及部署清单。不会自动下载模型。
+缺少模型时使用基础排序，搜索、收藏、画布和导出仍可使用。
+
+此版本为本地测试构建，只有 ad-hoc 签名，未使用 Apple Developer ID 签名或公证。
+对外正式分发前应完成 Developer ID 签名、公证及目标机器测试。
+若 macOS 阻止打开，请先确认来源，仅按 macOS 的系统提示处理；不要关闭全局安全防护。
+
+目标：Apple Silicon，macOS 14+；实际验证机器：macOS 15.8.1、M3。
+不支持 Intel Mac / Windows。首次在其他机型运行仍需验证。
+图库许可与 API 使用限制仍然适用。第三方软件许可见应用包内 THIRD_PARTY_NOTICES.txt。

@@ -1,0 +1,25 @@
+{
+  "version": "0.1.0",
+  "platform": "macOS arm64",
+  "tested_host": "macOS 15.8.1, Apple M3",
+  "installer": "AI-Mood-Board-Studio-0.1.0-macOS-arm64.dmg",
+  "installer_bytes": 316176384,
+  "bundle_bytes": 674376911,
+  "model_weights_included": false,
+  "developer_keys_or_projects_included": false,
+  "signature": "ad-hoc",
+  "notarized": false,
+  "backend_tests_passed": 60,
+  "frontend_tests_passed": 9,
+  "frozen_end_to_end_passed": true,
+  "read_only_dmg_relocation_passed": true,
+  "external_model_cpu_passed": true,
+  "external_model_mps_passed": true,
+  "native_window_open_close_passed": true,
+  "desktop_server_stops_on_close": true,
+  "limitations": [
+    "Other computers and macOS versions not yet independently tested",
+    "Intel and Windows builds not included",
+    "Real keyed provider / cloud LLM calls require the recipient own credentials"
+  ]
+}

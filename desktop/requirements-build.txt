@@ -1,0 +1,4 @@
+-r ../requirements-tested.txt
+pyinstaller==6.22.3
+pywebview==6.2.1
+sentencepiece==0.2.2

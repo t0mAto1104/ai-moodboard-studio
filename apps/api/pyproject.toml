@@ -1,0 +1,8 @@
+[project]
+name = "ai-moodboard-api"
+version = "0.1.0"
+requires-python = ">=3.11,<3.13"
+dependencies = ["fastapi", "uvicorn", "pydantic>=2", "httpx", "sqlalchemy>=2", "alembic", "pillow", "numpy", "scikit-image", "imagehash", "keyring", "litellm", "reportlab", "python-multipart"]
+[tool.pytest.ini_options]
+pythonpath = ["."]
+asyncio_mode = "auto"
