@@ -12,10 +12,10 @@ from app.ai.llm.rule_based_parser import RuleBasedIntentParser
 def photo(id='ref_test'):
     return {'id':id,'urls':{'small':'https://images.unsplash.com/photo-'+id+'?ixid=preserved'},'user':{'name':'Test Artist','links':{'html':'https://unsplash.com/@artist'}},'links':{'html':'https://unsplash.com/photos/'+id,'download_location':'https://api.unsplash.com/photos/'+id+'/download?ixid=preserved'},'width':1200,'height':800}
 
-def test_remote_preview_never_grants_export():
+def test_stock_license_allows_export_without_granting_ml_or_storage():
     asset=policy.apply(UnsplashProvider().normalize(photo()))
     assert asset.display_url.endswith('ixid=preserved')
-    assert asset.allowed_reference_board and not asset.allowed_store and not asset.allowed_temporary_analysis and not asset.allowed_export
+    assert asset.allowed_reference_board and not asset.allowed_store and not asset.allowed_temporary_analysis and asset.allowed_export
     assert 'utm_source=' in asset.creator_url
     asset.thumbnail_url='https://127.0.0.1/private'
     asset=policy.apply(asset)
@@ -36,7 +36,7 @@ async def test_selection_events_not_cached(monkeypatch):
     asset.license_evidence['download_location']='https://evil.example/photos/track_test/download'
     with pytest.raises(Exception,match='地址无效'):await provider.track_selection(asset)
 
-def test_reference_board_save_reopen_and_block_export(monkeypatch):
+def test_reference_board_save_reopen_and_export(monkeypatch):
     from app.routers import projects
     calls=[]
     async def track(asset):calls.append(asset.id)
@@ -68,5 +68,10 @@ def test_reference_board_save_reopen_and_block_export(monkeypatch):
         assert client.patch(base,json={'items':reopened['items']}).status_code==200
         assert job(base+'/generate',{'relayout_only':True})['status']=='completed'
         assert len(calls)==2
-        denied=job(base+'/export',{'format':'png'})
-        assert denied['status']=='failed' and '许可' in denied['error']
+        from app.providers.mock import fixture_bytes
+        from app.routers import assets as asset_router
+        async def fetch(url):return fixture_bytes(1)
+        monkeypatch.setattr(asset_router,'fetch_image',fetch)
+        exported=job(base+'/export',{'format':'png'})
+        assert exported['status']=='completed',exported
+        assert len(calls)==4

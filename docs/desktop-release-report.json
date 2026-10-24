@@ -1,16 +1,16 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "platform": "macOS arm64",
   "tested_host": "macOS 15.8.1, Apple M3",
-  "installer": "AI-Mood-Board-Studio-0.1.0-macOS-arm64.dmg",
-  "installer_bytes": 316176384,
-  "bundle_bytes": 674376911,
+  "installer": "AI-Mood-Board-Studio-0.1.1-macOS-arm64.dmg",
+  "installer_bytes": 316643621,
+  "bundle_bytes": 674380441,
   "model_weights_included": false,
   "developer_keys_or_projects_included": false,
   "signature": "ad-hoc",
   "notarized": false,
-  "backend_tests_passed": 60,
-  "frontend_tests_passed": 9,
+  "backend_tests_passed": 67,
+  "frontend_tests_passed": 11,
   "frozen_end_to_end_passed": true,
   "read_only_dmg_relocation_passed": true,
   "external_model_cpu_passed": true,
@@ -21,5 +21,9 @@
     "Other computers and macOS versions not yet independently tested",
     "Intel and Windows builds not included",
     "Real keyed provider / cloud LLM calls require the recipient own credentials"
-  ]
+  ],
+  "stock_provider_export_tests": "passed; Mock network in frozen self-test",
+  "real_unsplash_export": "PNG/PDF passed; two photos, four successful events; isolated data",
+  "real_pixabay_export": "not run: no key",
+  "embedding_checks": "historical unchanged embedding implementation CPU/MPS baseline"
 }

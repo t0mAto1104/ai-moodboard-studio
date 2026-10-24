@@ -27,7 +27,7 @@ def grant(monkeypatch):
 def test_analysis_grant_is_narrow(grant):
     a=policy.apply(asset())
     assert a.allowed_temporary_analysis and a.copyright_review_status=='user_authorized_analysis'
-    assert not a.allowed_store and not a.allowed_transform and not a.allowed_export
+    assert not a.allowed_store and a.allowed_transform and a.allowed_export
     grant['analysis_enabled']=False
     assert not policy.apply(a).allowed_temporary_analysis
 

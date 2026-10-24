@@ -16,7 +16,7 @@ Saving a favorite stores only asset reference, tag IDs and saved timestamp. Orig
 | User upload / original demo | Allowed by existing declared rights / original fixture license |
 | Openverse / unknown | Original-source rights not verified; open original source for review rather than treating indexed license text as authorization |
 
-Individual download is separate from allowed_transform / allowed_export. The manual button does not unlock collage export. After download, subsequent use remains subject to the source license and third-party rights. API credentials never enter image links or returned files.
+Individual download is separate from allowed_transform / allowed_export. The manual button itself does not grant new rights; official Unsplash/Pixabay stock licenses separately permit compliant creative-board exports. After download, subsequent use remains subject to the source license and third-party rights. API credentials never enter image links or returned files.
 
 The backend rechecks policy on POST /api/assets/{id}/download, not from client-supplied booleans/URLs. It uses HTTPS host allowlists, public-IP validation/pinning, no redirects, 40MB cap, two simultaneous download slots, MIME and file signature checks. Full-resolution downloads are not decoded into giant pixel arrays on the backend. Bytes stream into bounded RAM, return as an attachment and are not saved in application image cache. Browser then saves the file at its download destination. SQLite keeps an audit record containing source, creator, license, filename and byte count. A failed tracking event blocks Unsplash file delivery and surfaces the error.
 

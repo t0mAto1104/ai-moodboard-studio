@@ -7,9 +7,13 @@ from app.security.images import fetch_image
 from app.providers.mock import fixture_bytes
 from app.core.config import DATA
 router=APIRouter(prefix='/api/assets')
-async def image_bytes(a,cache=True,commercial=True):
+async def image_bytes(a,cache=True,commercial=True,purpose='analysis'):
     a=policy.apply(a,commercial)
-    if not a.allowed_temporary_analysis:raise ValueError('许可不允许下载或分析')
+    if purpose=='export':
+        a=policy.require_export(a,commercial)
+        cache=False
+    elif purpose=='display' and a.provider=='pixabay' and a.allowed_store and a.allowed_transform:pass
+    elif not a.allowed_temporary_analysis:raise ValueError('许可不允许下载或分析')
     if a.provider=='mock':return fixture_bytes(a.provider_asset_id)
     if a.provider=='upload':
         from uuid import UUID
@@ -17,8 +21,8 @@ async def image_bytes(a,cache=True,commercial=True):
         return source.read_bytes()
     path=DATA/'cache'/(hashlib.sha256(a.id.encode()).hexdigest()+'.img')
     if cache and a.allowed_store and path.exists():return path.read_bytes()
-    url=a.image_url
-    if a.provider=='unsplash':
+    url=a.image_url or a.download_url
+    if a.provider=='unsplash' and purpose=='analysis':
         # Keep the API-provided URL/ixid; request only an analysis-sized rendition.
         from urllib.parse import urlsplit,urlunsplit,parse_qsl,urlencode
         parts=urlsplit(url);params=dict(parse_qsl(parts.query))
@@ -32,7 +36,7 @@ async def image(id:str):
     raw=store.get('image_assets',id)
     if not raw:raise HTTPException(404)
     if raw['provider']=='unsplash':raise HTTPException(403,'Unsplash 展示使用官方图片链接')
-    try:data=await image_bytes(ImageAsset(**raw))
+    try:data=await image_bytes(ImageAsset(**raw),purpose='display')
     except ValueError as e:raise HTTPException(403,str(e))
     return Response(data,media_type='image/png' if data.startswith(b'\x89PNG') else 'image/jpeg',headers={'Cache-Control':'no-store'})
 

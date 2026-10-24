@@ -13,13 +13,25 @@ async def export_project(p,format):
     if not items:raise ValueError('画布为空')
     w,h=RATIOS[p['ratio']];canvas=Image.new('RGBA',(w,h),'#ffffff');manifest=[];loaded={}
     # Verify every linked source before producing any output file.
+    # Validate all permissions before any network event or fetch.
+    checked={}
+    for item in items:
+        if item['kind']=='image' and item['asset_id'] not in checked:
+            raw=store.get('image_assets',item['asset_id'])
+            if not raw:raise ValueError('素材不存在')
+            checked[item['asset_id']]=policy.require_export(ImageAsset(**raw),p.get('commercial',True))
+    if any(a.provider=='pixabay' for a in checked.values()) and len(items)<2:
+        raise ValueError('Pixabay 单图仅缩放或裁切不属于组合创作；请添加其他图片、文字或色卡后导出。')
     for item in items:
         if item['kind']=='image' and item['asset_id'] not in loaded:
             raw=store.get('image_assets',item['asset_id'])
             if not raw:raise ValueError('素材不存在')
-            a=policy.require_export(ImageAsset(**raw),p.get('commercial',True))
-            loaded[a.id]=decode(await image_bytes(a))
-            manifest.append({'id':a.id,'title':a.title,'author':a.creator_name,'source':a.source_page_url,'license':a.license_type,'license_url':a.license_url,'evidence':a.license_evidence,'verified_at':a.license_verified_at,'attribution':a.attribution_text,'modification':'scaled/cropped/arranged in mood board'})
+            a=checked[item['asset_id']]
+            if a.provider=='unsplash':
+                from app.providers.registry import PROVIDERS
+                await PROVIDERS['unsplash'].track_selection(a)
+            loaded[a.id]=decode(await image_bytes(a,cache=False,commercial=p.get('commercial',True),purpose='export'))
+            manifest.append({'id':a.id,'title':a.title,'author':a.creator_name,'author_url':a.creator_url,'source':a.source_page_url,'license':a.license_type,'license_url':a.license_url,'evidence':a.license_evidence,'verified_at':a.license_verified_at,'attribution':a.attribution_text,'modification':'scaled/cropped/arranged in mood board'})
     for item in sorted(items,key=lambda a:a['z_index']):
         iw,ih=max(1,round(item['width'])),max(1,round(item['height']));layer=Image.new('RGBA',(iw,ih),(0,0,0,0))
         if item['kind']=='image':
@@ -41,6 +53,6 @@ async def export_project(p,format):
     b=BytesIO();canvas.convert('RGB').save(b,'PDF' if format=='pdf' else 'PNG',resolution=150)
     id=str(uuid.uuid4());path=DATA/'exports'/(id+'.zip')
     with zipfile.ZipFile(path,'w',zipfile.ZIP_DEFLATED) as z:
-        z.writestr('moodboard.'+format,b.getvalue());z.writestr('license-manifest.json',json.dumps(manifest,ensure_ascii=False,indent=2));z.writestr('attribution.txt','\n\n'.join(m['attribution']+'\n'+m['source']+'\n'+m['license_url']+'\nModified: '+m['modification'] for m in manifest))
+        z.writestr('moodboard.'+format,b.getvalue());z.writestr('license-manifest.json',json.dumps(manifest,ensure_ascii=False,indent=2));z.writestr('attribution.txt','\n\n'.join(m['attribution']+'\n'+m['author_url']+'\n'+m['source']+'\n'+m['license_url']+'\nModified: '+m['modification'] for m in manifest))
     store.put('export_records',id,{'id':id,'project_id':p['id'],'format':format,'filename':path.name})
     return {'id':id,'url':'/api/exports/'+id,'format':format}

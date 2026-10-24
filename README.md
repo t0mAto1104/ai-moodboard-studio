@@ -14,7 +14,7 @@ A local-first visual research workspace with editable mood boards.
 
 AI Mood Board Studio 将图片检索、标签收藏、本地视觉排序和可编辑画布放在同一个纯白工作区。核心流程在本机运行；云端大语言模型是可选项。
 
-> **0.1.0 预览版** · Apple Silicon Mac · 安装包约 316 MB · 不含视觉模型、开发者密钥或用户数据 · 尚未完成 Apple Developer ID 签名和公证。
+> **0.1.1 预览版** · Apple Silicon Mac · 安装包约 317 MB · 不含视觉模型、开发者密钥或用户数据 · 尚未完成 Apple Developer ID 签名和公证。
 
 ## 可以做什么
 
@@ -70,8 +70,8 @@ AI Mood Board Studio 将图片检索、标签收藏、本地视觉排序和可�
 | --- | --- |
 | Openverse | 无需 Key；检索 / 参考，索引许可不视为已核实 |
 | Art Institute of Chicago / The Met | 无需 Key；核实公有领域状态后按权限处理，受上游可用性影响 |
-| Unsplash | 自带 Access Key；官方热链接、署名、参考板、下载事件上报；分析需额外授权，拼贴文件导出禁用 |
-| Pixabay | 自带 Key；搜索预览和按规则单张下载；当前拼贴导出禁用 |
+| Unsplash | 自带 Access Key；官方热链接、署名、参考板、下载事件上报；分析需额外授权；符合许可的拼贴可导出 |
+| Pixabay | 自带 Key；搜索预览和按规则单张下载；组合创作可导出，画布预览使用本地副本 |
 | 用户上传 / 演示素材 | 用户确认使用权 / 原创程序测试图，支持相应编辑导出流程 |
 
 没有接入或抓取 Pinterest。[素材许可](docs/licenses.md) · [收藏与下载](docs/library-and-downloads.md)
@@ -109,7 +109,7 @@ bash scripts/test.sh
 .venv/bin/python scripts/smoke.py --vision --output /tmp/moodboard-vision.json
 ```
 
-已记录 **60 项后端、9 项前端测试通过**，并实际验证生产构建、独立 `.app` 启停、只读 DMG 搬移运行、收藏、项目重开、PNG/PDF 与署名导出，以及外接模型 CPU / MPS 编码。这不代表所有电脑、上游 API 或万张图片性能已经验证。
+已记录 **67 项后端、11 项前端测试通过**，并实际验证生产构建、独立 `.app` 启停、只读 DMG 搬移运行、收藏、项目重开、PNG/PDF 与署名导出，以及外接模型 CPU / MPS 编码。这不代表所有电脑、上游 API 或万张图片性能已经验证。
 
 | 文档 | 内容 |
 | --- | --- |

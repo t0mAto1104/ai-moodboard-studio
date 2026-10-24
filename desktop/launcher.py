@@ -69,6 +69,35 @@ def self_test(report_path,model_path=None):
                 data=archive.read('moodboard.'+fmt)
                 checks['export_'+fmt]=data.startswith(b'\x89PNG' if fmt=='png' else b'%PDF-')
                 checks['attribution_'+fmt]=bool(archive.read('attribution.txt'))
+        # Exercise stock-license exports inside the frozen application too.
+        # The network is explicitly mocked; no developer credentials are used.
+        from unittest.mock import patch
+        from app.providers.unsplash import UnsplashProvider
+        from app.providers.pixabay import PixabayProvider
+        from app.providers.registry import PROVIDERS
+        from app.providers.mock import fixture_bytes
+        from app.routers import assets as asset_router
+        calls=[]
+        async def track(asset):calls.append(asset.id)
+        async def fetch(url):return fixture_bytes(3)
+        with patch.object(PROVIDERS['unsplash'],'track_selection',track),patch.object(asset_router,'fetch_image',fetch):
+            for source in ('unsplash','pixabay'):
+                rows=[]
+                for i in range(2):
+                    if source=='unsplash':
+                        id='package-export-'+str(i)
+                        a=UnsplashProvider().normalize({'id':id,'urls':{'small':'https://images.unsplash.com/photo-test?w=400','regular':'https://images.unsplash.com/photo-test?w=1080'},'links':{'html':'https://unsplash.com/photos/'+id,'download_location':'https://api.unsplash.com/photos/'+id+'/download'},'user':{'name':'Package test artist','links':{'html':'https://unsplash.com/@test'}}})
+                    else:a=PixabayProvider().normalize({'id':8800+i,'user':'Package test artist','pageURL':'https://pixabay.com/photos/test-'+str(8800+i)+'/','previewURL':'https://cdn.pixabay.com/photo/test.jpg','webformatURL':'https://pixabay.com/get/test.jpg'})
+                    store.put('image_assets',a.id,a.model_dump());rows.append(a)
+                p=post('/projects',{'name':'Stock export self-test','intent':intent,'asset_ids':[a.id for a in rows]})
+                job('/projects/'+p['id']+'/generate',{'use_vision':False})
+                for fmt in ('png','pdf'):
+                    result=job('/projects/'+p['id']+'/export',{'format':fmt})
+                    response=client.get(result['url']);response.raise_for_status()
+                    with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
+                        manifest=json.loads(archive.read('license-manifest.json'))
+                        checks[source+'_export_'+fmt]=len(manifest)==2 and bool(archive.read('moodboard.'+fmt)) and bool(archive.read('attribution.txt'))
+        checks['unsplash_export_tracking']=len(calls)==6
         import keyring
         from app.ai.llm.credential_manager import SERVICE
         checks['separate_credential_service']=SERVICE=='AI Mood Board Studio Desktop'

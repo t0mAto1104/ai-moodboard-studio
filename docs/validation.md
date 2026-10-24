@@ -1,11 +1,11 @@
 # 验证范围
 
-0.1.0 已在 macOS 15.8.1 / Apple M3 上运行验证。完整安装包与运行库不包含视觉模型文件。下面区分自动化、独立包、真实模型和第三方联网验证，避免将 Mock 成功等同于真实 API 成功。
+0.1.1 已在 macOS 15.8.1 / Apple M3 上运行验证。完整安装包与运行库不包含视觉模型文件。下面区分自动化、独立包、真实模型和第三方联网验证，避免将 Mock 成功等同于真实 API 成功。
 
 | 层次 | 已记录结果 | 范围 |
 | --- | --- | --- |
-| Python / pytest | 60 passed | 规则解析、Schema、图库契约与失败、许可、算法、布局、项目、下载安全、收藏和模型目录 |
-| React / Vitest | 9 passed | 主流程、来源设置、收藏标签、卡片、视觉入口 |
+| Python / pytest | 67 passed | 规则解析、Schema、图库契约与失败、许可、算法、布局、项目、下载安全、收藏和模型目录 |
+| React / Vitest | 11 passed | 主流程、来源设置、收藏标签、卡片、视觉入口 |
 | 生产构建 | passed | TypeScript + Vite |
 | Frozen app | passed | 新数据目录、迁移、静态页面、Mock 搜索、收藏、项目、PNG/PDF、署名与钥匙串运行库 |
 | 安装镜像 | passed | 校验和、ad-hoc 签名完整性、只读挂载并从不同目录自检 |
@@ -33,3 +33,5 @@ bash scripts/test.sh
 - 本机验证不能代替其他 macOS 版本、Intel / Windows 或所有设备的安装验收。
 
 详细延迟和内存口径见 [performance.md](performance.md)。
+
+0.1.1 adds stock-provider PNG/PDF export regression checks (mock network), legacy-project permission refresh, event-failure blocking, unknown-license preflight, no ML permission escalation, export without image-cache writes and local Pixabay board previews. Historical CPU/MPS model checks remain applicable to the unchanged embedding implementation; they are not new real-provider API export tests.

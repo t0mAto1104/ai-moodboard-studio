@@ -46,7 +46,15 @@ def create(r:ProjectCreate):
 def listing():return [{**p,'assets':[a for aid in p['asset_ids'] if (a:=store.get('image_assets',aid))]} for p in store.all_rows('projects')]
 @router.get('/{id}')
 def get(id:str):
-    p=project(id);return {**p,'assets':[a for aid in p['asset_ids'] if (a:=store.get('image_assets',aid))]}
+    from app.pipeline.license_filter import policy
+    p=project(id);assets=[]
+    for aid in p['asset_ids']:
+        raw=store.get('image_assets',aid)
+        if not raw:continue
+        a=policy.apply(ImageAsset(**raw),p.get('commercial',True))
+        if a.provider=='pixabay':a.display_url=''
+        assets.append(a.model_dump())
+    return {**p,'assets':assets}
 @router.patch('/{id}')
 async def patch(id:str,r:ProjectPatch):
     p=project(id);old_items=copy.deepcopy(p['items']);changes=r.model_dump(exclude_none=True);items=changes.pop('items',p['items']);p.update(changes)

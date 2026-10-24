@@ -8,7 +8,7 @@ router=APIRouter(prefix='/api')
 @router.get('/providers')
 def providers():
     from app.ai.llm.credential_manager import credentials
-    return [{'id':n,'enabled':(store.get('settings','provider:'+n) or {}).get('enabled',n not in ('mock','pixabay','unsplash')),'analysis_enabled':(store.get('settings','provider:'+n) or {}).get('analysis_enabled',False),'configured':bool(credentials.get('image:'+n)) if n in ('pixabay','unsplash') else True,'status':'reference-only' if n in ('pixabay','unsplash','openverse') else 'demo' if n=='mock' else 'available','diagnostics':store.get('settings','diagnostics:'+n),'policy':p.get_usage_policy()} for n,p in PROVIDERS.items()]
+    return [{'id':n,'enabled':(store.get('settings','provider:'+n) or {}).get('enabled',n not in ('mock','pixabay','unsplash')),'analysis_enabled':(store.get('settings','provider:'+n) or {}).get('analysis_enabled',False),'configured':bool(credentials.get('image:'+n)) if n in ('pixabay','unsplash') else True,'status':'reference-only' if n=='openverse' else 'demo' if n=='mock' else 'available','diagnostics':store.get('settings','diagnostics:'+n),'policy':p.get_usage_policy()} for n,p in PROVIDERS.items()]
 @router.post('/providers/{name}/health')
 async def check(name:str):
     if name not in PROVIDERS:raise HTTPException(404)

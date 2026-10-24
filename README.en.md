@@ -14,7 +14,7 @@ A local-first visual research workspace built with React, Konva, FastAPI and SQL
 
 ## Preview release
 
-Version 0.1.0 is available as a ~316 MB DMG for Apple Silicon Macs. Drag the app into Applications; no separate Python or Node installation is needed. Target macOS 14+, tested on macOS 15.8.1 / M3 only. Intel and Windows packages are not provided.
+Version 0.1.1 is available as a ~317 MB DMG for Apple Silicon Macs. Drag the app into Applications; no separate Python or Node installation is needed. Target macOS 14+, tested on macOS 15.8.1 / M3 only. Intel and Windows packages are not provided.
 
 The app is **ad-hoc signed, not Developer ID signed or notarized**. Other computers may block it. Formal distribution still needs signing, notarization and testing on additional machines. Do not disable system-wide security protections.
 
@@ -36,7 +36,7 @@ Basic bilingual rules work without credentials. Optional cloud LLM parsing uses 
 
 Optional vision uses `google/siglip2-base-patch16-224`, revision `75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2`, with normalized 768-dimensional embeddings. Select a separately prepared model folder in Settings; an external drive works. Loading is offline and selects CUDA, MPS or CPU. See [model setup](docs/model-setup.md).
 
-Openverse, Art Institute of Chicago and The Met are available without keys; Unsplash and Pixabay require the user's own credentials. Providers can fail or rate-limit independently. Search access is not authorization to analyze, transform or export. Unknown/index-only rights cannot grant exports. Unsplash uses official hotlinks, attribution and download events; local ML analysis requires a separate user-confirmed authorization scope and does not unlock collage file export. Pixabay collage export is also disabled. No Pinterest scraping is used. See [source policy](docs/licenses.md).
+Openverse, Art Institute of Chicago and The Met are available without keys; Unsplash and Pixabay require the user's own credentials. Providers can fail or rate-limit independently. Search access is not authorization to analyze, transform or export. Unknown/index-only rights cannot grant exports. Unsplash uses official hotlinks, attribution and download events; local ML analysis requires a separate user-confirmed authorization scope. Both stock sources support licensed creative-board PNG/PDF export with source manifests; Pixabay board previews use local copies rather than permanent hotlinks. No Pinterest scraping is used. See [source policy](docs/licenses.md).
 
 ## Run from source
 
@@ -60,7 +60,7 @@ bash scripts/test.sh
 .venv/bin/python scripts/smoke.py --vision --output /tmp/moodboard-vision.json
 ```
 
-Recorded validation: 60 backend and 9 frontend tests; production build; standalone app startup/shutdown; read-only DMG relocation; project save/reopen; PNG/PDF with manifests; external-model CPU and MPS inference. This does not establish real-world retrieval accuracy, 10,000-image throughput or compatibility with every upstream service. [Validation](docs/validation.md) · [Performance](docs/performance.md) · [Known limitations](docs/known-limitations.md).
+Recorded validation: 67 backend and 11 frontend tests; production build; standalone app startup/shutdown; read-only DMG relocation; project save/reopen; PNG/PDF with manifests; external-model CPU and MPS inference. This does not establish real-world retrieval accuracy, 10,000-image throughput or compatibility with every upstream service. [Validation](docs/validation.md) · [Performance](docs/performance.md) · [Known limitations](docs/known-limitations.md).
 
 ## Documentation
 

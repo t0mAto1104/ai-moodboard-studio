@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "provider": "unsplash",
+  "real_network": true,
+  "photos": 2,
+  "outputs": [
+    {
+      "format": "png",
+      "bytes": 590709
+    },
+    {
+      "format": "pdf",
+      "bytes": 57254
+    }
+  ],
+  "successful_download_events": 4,
+  "source_image_cache_files": 0,
+  "existing_project_database_modified": false
+}

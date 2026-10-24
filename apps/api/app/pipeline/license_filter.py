@@ -11,7 +11,7 @@ class LicensePolicyEngine:
         parsed=urlparse(url)
         if parsed.scheme=='https' and parsed.hostname in hosts.get(a.provider,set()) and not parsed.username and not parsed.password and parsed.port in (None,443):
             a.display_url=url
-        if a.provider=='unsplash' and a.display_url:
+        if a.provider in ('unsplash','pixabay') and a.display_url:
             a.allowed_reference_board=True
         download=urlparse(a.download_url)
         safe_download=download.scheme=='https' and download.hostname in hosts.get(a.provider,set()) and not download.username and not download.password and download.port in (None,443)
@@ -24,6 +24,19 @@ class LicensePolicyEngine:
         # Only provenance gathered from a trusted adapter is a source verification.
         verified=a.license_evidence.get('source_verified') is True and a.provider in ('artic','metmuseum','mock','upload')
         a.allowed_display = a.provider in ('openverse','unsplash','pixabay') or verified
+        # Official stock licenses permit derivative boards. This is independent
+        # from ML analysis permission and from persistent image-file storage.
+        source=urlparse(a.source_page_url)
+        official_source=source.scheme=='https' and not source.username and not source.password and source.port in (None,443)
+        licensed=(a.provider=='unsplash' and a.license_type in ('Unsplash License','Unsplash API research-only') and source.hostname=='unsplash.com') or (a.provider=='pixabay' and a.license_type=='Pixabay Content License' and source.hostname=='pixabay.com')
+        if official_source and licensed and a.display_url and a.attribution_text:
+            a.license_verified_at=time.time();a.copyright_review_status='verified_source_license'
+            a.allowed_transform=a.allowed_export=True
+            a.allowed_store=a.provider=='pixabay'
+            a.license_type='Unsplash License' if a.provider=='unsplash' else a.license_type
+            a.license_url='https://unsplash.com/license' if a.provider=='unsplash' else 'https://pixabay.com/service/terms/'
+            a.license_evidence={**a.license_evidence,'source_verified':True,'export_basis':'official-stock-license-v1','export_scope':'creative mood board; source restrictions and third-party rights still apply'}
+            a.license_evidence.pop('reason',None)
         if a.provider=='unsplash' and a.display_url:
             from app.db import store
             cfg=store.get('settings','provider:unsplash') or {}
@@ -44,7 +57,7 @@ class LicensePolicyEngine:
         return a
     def require_export(self,a,commercial=True):
         a=self.apply(a,commercial)
-        if not all((a.allowed_store,a.allowed_transform,a.allowed_export)):
+        if not all((a.allowed_transform,a.allowed_export)):
             raise ValueError(f'素材 {a.id} 的许可不允许导出，请替换。')
         return a
 policy=LicensePolicyEngine()

@@ -49,7 +49,7 @@ def unsplash():
 
 def test_unsplash_download_independent_of_export_and_not_cached(monkeypatch):
     a=stored(unsplash());checked=policy.apply(a)
-    assert checked.allowed_download and not checked.allowed_export and not checked.allowed_store
+    assert checked.allowed_download and checked.allowed_export and not checked.allowed_store
     events=[];urls=[]
     async def track(a):events.append(a.id)
     async def fetch(url):urls.append(url);return fixture_bytes(3)

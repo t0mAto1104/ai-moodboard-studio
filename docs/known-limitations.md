@@ -9,7 +9,7 @@
 - Ranking uses greedy MMR, basic source/query diversity and heuristic weights, not a fully constrained global optimizer.
 - Individual image inference is bounded and memory-conscious; bulk batching and 10k-image throughput profiling remain work.
 - Search and inference sorting scores are not calibrated relevance probabilities. Cache and preprocessing revisions prevent vector-space mixing.
-- Unsplash reference boards are editable/savable; the user-authorized local-inference option permits RAM-only visual ranking. PNG/PDF export remains disabled. Authorization is recorded as user-declared, not independently verified. Pixabay is a temporary preview/reference integration pending contextual use review; each user supplies their own key.
+- Unsplash reference boards are editable/savable; the user-authorized local-inference option permits RAM-only visual ranking. Licensed creative-board PNG/PDF export is supported independently from ML authorization. Authorization is recorded as user-declared, not independently verified. Pixabay supports licensed creative-board export and locally cached board previews; single-image resize/crop-only exports are rejected. Each user supplies their own key.
 - Runtime package versions are recorded for this Mac; other operating systems not verified. Vite emits a bundle-size warning; test tooling emits an upstream httpx deprecation warning.
 - Desktop release is ad-hoc signed, not Developer ID signed/notarized. Only the recorded Apple Silicon/macOS host was tested; no Intel/Windows package, automatic updates or automatic migration from developer data.
 - No one-click model installer yet. A separately prepared fixed-version model directory and deployment_manifest.json are required; the app never silently downloads weights.

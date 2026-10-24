@@ -22,3 +22,6 @@ Application data defaults to a project-local .local directory on internal disk (
 
 ## Known requirement conflict
 The later cloud-LLM architecture supersedes legacy Ollama parser/settings/test bullets. Test cloud failure fallback instead. Human relevance judgments and retention metrics cannot be invented; evaluation scaffolding records unlabelled status until a person annotates.
+
+## Stock export permissions (0.1.1)
+Official Unsplash/Pixabay stock-license permissions allow creative-board export independently of ML analysis. Export checks every asset before network calls, uses RAM-only rendering, sends Unsplash events per unique photo and preserves credit/profile/source/license links. Pixabay saved-board previews use permitted local copies; single-image resize/crop-only exports are blocked. GET project re-evaluates stale saved flags. Unknown rights stay blocked.

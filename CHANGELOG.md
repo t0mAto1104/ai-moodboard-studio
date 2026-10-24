@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1 — 2026-10-24
+
+- Enable licensed Unsplash / Pixabay creative-board PNG/PDF exports, with complete attribution and manifests.
+- Recompute existing project permissions on reopen; keep ML authorization separate from export rendering.
+- Track unique Unsplash photos on every export; fail before delivery if tracking fails, without persisting original-image files.
+- Serve saved Pixabay board images from local copies instead of permanent remote hotlinks; reject resize/crop-only single-image exports.
+- Add stock export regressions and frozen-app self-tests. Unknown rights and unsafe URLs remain blocked.
+- Publish an updated Apple Silicon installer, without model weights or private data. Still ad-hoc signed / not notarized.
+
 ## 0.1.0 — 2026-10-24
 
 First public preview of AI Mood Board Studio.

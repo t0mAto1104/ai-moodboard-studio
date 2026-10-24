@@ -13,7 +13,7 @@ SKIP_PARTS = {'.git', '.local', '.venv', '.build', '.publish', 'releases', 'node
               'dist', '__pycache__', '.pytest_cache', '.cache'}
 REPORTS = {'benchmark-metadata.json', 'benchmark-siglip2.json', 'benchmark-siglip2-mps.json',
            'desktop-release-report.json', 'desktop-model-test.json', 'desktop-mps-test.json',
-           'desktop-dmg-test.json', 'package-audit.json', 'openverse-contract.json'}
+           'desktop-dmg-test.json', 'package-audit.json', 'openverse-contract.json', 'stock-export-live.json', 'desktop-frozen-test.json'}
 
 def clean(value):
     if isinstance(value, dict): return {k: clean(v) for k, v in value.items()}
@@ -48,7 +48,7 @@ def export(destination):
     (destination/'docs/progress.md').write_text(
         '# Public development record\n\n'
         '2026-10-24: Local MVP and Apple Silicon desktop preview completed. '
-        'Backend 60 tests, frontend 9 tests, production build, isolated Mock workflow, '
+        'Backend 67 tests, frontend 11 tests, production build, isolated Mock workflow, '
         'native window lifecycle, read-only DMG relocation and external SigLIP CPU/MPS encoding passed. '
         'Private development logs and live user-data reports are intentionally excluded.\n\n'
         'See validation.md, CHANGELOG.md and known-limitations.md for scope and remaining work.\n')

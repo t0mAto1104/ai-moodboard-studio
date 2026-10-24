@@ -9,7 +9,7 @@
 每份 Release 附 SHA256 校验文件。将 DMG 和 `.dmg.sha256` 放在同一目录，再执行：
 
 ```sh
-shasum -a 256 -c AI-Mood-Board-Studio-0.1.0-macOS-arm64.dmg.sha256
+shasum -a 256 -c AI-Mood-Board-Studio-0.1.1-macOS-arm64.dmg.sha256
 ```
 
 ## 无账号体验
@@ -38,6 +38,8 @@ shasum -a 256 -c AI-Mood-Board-Studio-0.1.0-macOS-arm64.dmg.sha256
 
 ## 导出
 
+Unsplash、Pixabay 官方许可素材现支持组合画布导出；Pixabay 仅缩放 / 裁切的单图不视为组合创作。Unsplash 每次导出按图片上报下载事件，失败则停止。
+
 PNG / PDF 导出返回 ZIP，包含成品、`attribution.txt` 与 `license-manifest.json`。后端会重新核查许可，Unknown、限制改编或当前未开放导出的来源会阻止导出。可替换素材，或导入你确实拥有复制、修改及输出权利的图片。不要通过修改前端权限字段绕过检查。
 
 ## AI 设置
@@ -46,7 +48,7 @@ PNG / PDF 导出返回 ZIP，包含成品、`attribution.txt` 与 `license-manif
 
 可以配置备用模型、单次 / 累计预算与价格。费用为估算，不是供应商账单；限额不能替代供应商侧费用控制。未配置或调用失败时会回退到规则解析。
 
-SigLIP 视觉模型连接见 [模型说明](model-setup.md)。Unsplash 视觉分析需要额外授权，设置中的声明并不独立验证授权，也不授予文件导出权限。
+SigLIP 视觉模型连接见 [模型说明](model-setup.md)。Unsplash 视觉分析需要额外授权，设置中的声明并不独立验证授权，与常规拼贴导出权限分开判断。
 
 ## 数据、备份与更新
 
