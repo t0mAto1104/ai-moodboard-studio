@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TOP = {'README.md', 'README.en.md', 'AGENTS.md', 'CHANGELOG.md', 'CONTRIBUTING.md',
        'NOTICE.md', '.gitignore', '.env.example', 'requirements-tested.txt'}
 DIRS = {'apps', 'fixtures', 'scripts', 'desktop', 'docs', '.github'}
-SKIP_PARTS = {'.git', '.local', '.venv', '.build', '.publish', 'releases', 'node_modules',
+SKIP_PARTS = {'.git', '.local', '.venv', '.model-tools', '.build', '.publish', 'releases', 'node_modules',
               'dist', '__pycache__', '.pytest_cache', '.cache'}
 REPORTS = {'benchmark-metadata.json', 'benchmark-siglip2.json', 'benchmark-siglip2-mps.json',
            'desktop-release-report.json', 'desktop-model-test.json', 'desktop-mps-test.json',

@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — documentation and model preparation
+
+- Add Chinese/English homepage instructions for fixed-version SigLIP setup and image API credential registration.
+- Add an explicit model preparation CLI with pinned file hashes, external cache paths, safe resumption and read-only verification; five isolated tests passed. The desktop app still never auto-downloads weights.
+
 ## 0.1.2 — 2026-10-24
 
 - Includes the 0.1.1 licensed stock export fix.

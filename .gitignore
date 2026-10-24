@@ -10,6 +10,7 @@ __pycache__/
 releases/
 .publish/
 .venv/
+.model-tools/
 .DS_Store
 *.tsbuildinfo
 *.log

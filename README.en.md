@@ -38,6 +38,30 @@ Optional vision uses `google/siglip2-base-patch16-224`, revision `75de2d55ec2d0b
 
 Openverse, Art Institute of Chicago and The Met are available without keys; Unsplash and Pixabay require the user's own credentials. Providers can fail or rate-limit independently. Search access is not authorization to analyze, transform or export. Unknown/index-only rights cannot grant exports. Unsplash uses official hotlinks, attribution and download events; local ML analysis requires a separate user-confirmed authorization scope. Both stock sources support licensed creative-board PNG/PDF export with source manifests; Pixabay board previews use local copies rather than permanent hotlinks. No Pinterest scraping is used. See [source policy](docs/licenses.md).
 
+## Prepare the optional vision model
+
+Only SigLIP 2 Base is integrated. You can connect an existing complete folder, including `deployment_manifest.json`, in Settings. For a first download, get the [source ZIP](https://github.com/t0mAto1104/ai-moodboard-studio/archive/refs/heads/main.zip), open a terminal in its extracted root, and run:
+
+```sh
+python3.12 -m venv .model-tools
+.model-tools/bin/python -m pip install 'huggingface_hub==0.36.2'
+.model-tools/bin/python scripts/install_vision_model.py --directory '/Volumes/YOUR_DISK/AI_Models/siglip2-base-patch16-224'
+```
+
+Replace `YOUR_DISK` with your mounted drive name. The tool pins the revision, checks sizes and SHA256, generates the deployment manifest, and keeps weights / Hub caches on the selected disk. Reserve at least 3 GB (files total about 1.54 GB). Python is needed for this preparation step only; the desktop app bundles its runtime. No model weights are added to GitHub or the installer. [Model setup and read-only verification](docs/model-setup.md).
+
+## Obtain image API credentials
+
+| Source | Official entry point | What to enter |
+| --- | --- | --- |
+| Unsplash | [Developer portal](https://unsplash.com/developers) → Your apps → New Application → Keys | **Access Key**, not Secret Key |
+| Pixabay | Sign in and open the [API documentation](https://pixabay.com/api/docs/) | Your **API Key** |
+| Openverse | [Public API docs](https://docs.openverse.org/api/) | No key for the integrated anonymous path |
+| Art Institute of Chicago | [Public API docs](https://api.artic.edu/docs/) | No key |
+| The Met | [Public API docs](https://metmuseum.github.io/) | No key |
+
+In Settings, save the key under the matching image source, enable it, and test the connection. Also select that source in the search menu. Unsplash currently documents 50 API calls/hour for Demo; Pixabay defaults to 100 calls/60 seconds, subject to account/response limits. These are requests, not image counts. Do not publish keys or confuse them with cloud LLM keys. [Step-by-step source guide](docs/image-api-setup.md).
+
 ## Run from source
 
 Tested with Python 3.12 on macOS arm64. Vite 7 requires Node `^20.19.0 || >=22.12.0`.

@@ -26,3 +26,6 @@ Official Unsplash / Pixabay licenses permit compliant creative-board export; do 
 
 ## GitHub publication
 Canonical project: https://github.com/t0mAto1104/ai-moodboard-studio . Publish app-directory contents as repository root, not parent USB-deployment experiments. Use scripts/prepare-publication.py and scripts/check-publication.py for a fresh reviewable snapshot; private progress logs, live user reports and third-party image screenshots stay local. Installers belong to GitHub Releases, never Git history. No application source license has been selected: do not assign an open-source license without user authorization. See docs/github-publishing.md. The local first-publication Git checkout is .publish/github-v0.1.0-final, isolated from the original parent repository.
+
+## Model preparation documentation
+Use scripts/install_vision_model.py only with an explicit destination; --verify-only must stay read-only/offline. Fixed files/hashes live in scripts/siglip2-files.json, matched to the embedding revision. Refuse unrelated nonempty folders, keep Hub/Xet caches on the chosen disk, and never put weights in Git or releases. Test with .build/venv/bin/python -m pytest scripts/tests -q. Docs must distinguish optional CLI preparation from the installer runtime and from an in-app model manager; no GUI downloader is shipped.

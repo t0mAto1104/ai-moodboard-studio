@@ -64,15 +64,38 @@ AI Mood Board Studio 将图片检索、标签收藏、本地视觉排序和可�
 
 远程视觉分析需要读取图片字节，当前在内存处理，不写图片文件缓存；仍需具备对应来源的分析权限。Unsplash 的本地 AI 分析需另行确认授权，普通 API Key 不自动提供该权限。
 
-## 素材来源
+## 视觉模型安装
 
-| 来源 | 配置与范围 |
-| --- | --- |
-| Openverse | 无需 Key；检索 / 参考，索引许可不视为已核实 |
-| Art Institute of Chicago / The Met | 无需 Key；核实公有领域状态后按权限处理，受上游可用性影响 |
-| Unsplash | 自带 Access Key；官方热链接、署名、参考板、下载事件上报；分析需额外授权；符合许可的拼贴可导出 |
-| Pixabay | 自带 Key；搜索预览和按规则单张下载；组合创作可导出，画布预览使用本地副本 |
-| 用户上传 / 演示素材 | 用户确认使用权 / 原创程序测试图，支持相应编辑导出流程 |
+当前可用：**SigLIP 2 Base**，约 1.54 GB；Qwen 等尚未接入。安装包不含权重，也不会自行下载。
+
+**已有完整目录**：复制模型文件及 `deployment_manifest.json`，在软件「设置 → 本机与缓存 → 选择文件夹」连接，可直接使用外接盘。
+
+**首次下载**：先下载并解压 [源码 ZIP](https://github.com/t0mAto1104/ai-moodboard-studio/archive/refs/heads/main.zip)，在项目目录执行以下命令。Python 3.12 只用于模型准备；桌面应用日常使用不需要额外安装 Python。
+
+```sh
+python3.12 -m venv .model-tools
+.model-tools/bin/python -m pip install 'huggingface_hub==0.36.2'
+.model-tools/bin/python scripts/install_vision_model.py --directory '/Volumes/YOUR_DISK/AI_Models/siglip2-base-patch16-224'
+```
+
+把 `YOUR_DISK` 替换为实际已挂载的盘名，目标磁盘建议预留至少 3 GB。工具固定模型版本，核验大小与 SHA256，生成部署清单，并把权重及下载缓存留在指定磁盘；不覆盖无关已有文件。完成后在设置中连接该目录，对获准素材运行视觉筛选。[详细安装、迁移与排错](docs/model-setup.md)
+
+## 图库 API 申请与配置
+
+| 来源 / 官方入口 | 获取方式 | 软件中填写 |
+| --- | --- | --- |
+| [Unsplash 开发者平台](https://unsplash.com/developers) | 注册 / 登录 → Your apps → New Application → 查看 Keys | **Access Key**，不要填 Secret Key |
+| [Pixabay API](https://pixabay.com/api/docs/) | 注册 / 登录后，在 API 文档页查看个人 Key | **API Key** |
+| [Openverse](https://docs.openverse.org/api/) | 当前使用基础匿名搜索，无需申请 Key | 启用来源即可 |
+| [Art Institute of Chicago](https://api.artic.edu/docs/) | 公开 API，无需注册 Key | 启用来源即可 |
+| [The Met](https://metmuseum.github.io/) | 公开 API，无需注册 Key | 启用来源即可 |
+| 演示素材 / 用户上传 | 无需图库账号；上传需确认使用权 | 软件内开启 / 导入 |
+
+拿到 Key 后：**设置 → 图片来源 → 对应图库 → 粘贴并保存 → 启用 → 测试连接**；回到检索页，还需在本次来源菜单选中该图库。密钥只在本机钥匙串保存，不要贴到 GitHub。
+
+Unsplash Demo 当前为 50 次 API 请求 / 小时，不是 50 张图片；更高额度需按官方 Production 流程申请。Pixabay 默认 100 次请求 / 60 秒，以账号和响应头为准。连接测试和下载事件也可能消耗 API 配额，避免反复测试。[逐步申请说明与错误排查](docs/image-api-setup.md)
+
+图库密钥与云端大模型密钥不同。Unsplash / Pixabay 常规合规组合画布可导出；Unsplash ML 分析需额外授权，Openverse 索引素材未核实权利前仍作参考。各来源可能受网络、限流及素材权限影响。
 
 没有接入或抓取 Pinterest。[素材许可](docs/licenses.md) · [收藏与下载](docs/library-and-downloads.md)
 
@@ -114,6 +137,7 @@ bash scripts/test.sh
 | 文档 | 内容 |
 | --- | --- |
 | [使用指南](docs/user-guide.md) | 搜索、收藏、编辑、导出与排错 |
+| [图库 API 申请](docs/image-api-setup.md) | 注册入口、Key 类型、软件配置与配额 |
 | [模型准备](docs/model-setup.md) | 固定版本、外接目录、离线加载 |
 | [架构](docs/architecture.md) / [API](docs/api.md) | 模块与接口，运行后也可访问 `/docs` |
 | [验证范围](docs/validation.md) / [性能](docs/performance.md) | 测试命令和测量限制 |

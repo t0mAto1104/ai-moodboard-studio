@@ -7,7 +7,7 @@ import re
 PATTERNS = [r'gh[pousr]_[A-Za-z0-9]{30,}', r'github_pat_[A-Za-z0-9_]{30,}',
             r'sk-(?:proj-|ant-)[A-Za-z0-9_-]{24,}', r'AIza[A-Za-z0-9_-]{30,}',
             r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----']
-FORBIDDEN = {'.local', '.venv', '.build', 'node_modules', 'releases', '__pycache__'}
+FORBIDDEN = {'.local', '.venv', '.model-tools', '.build', 'node_modules', 'releases', '__pycache__'}
 
 def check(root):
     files = [p for p in root.rglob('*') if p.is_file() and '.git' not in p.relative_to(root).parts]
