@@ -1,12 +1,10 @@
-# AI Mood Board Studio 0.1.0 — macOS Preview
-
 本地优先的图片检索、标签收藏与可编辑情绪板工作区。
 
 ## 下载 / Download
 
 - `AI-Mood-Board-Studio-0.1.0-macOS-arm64.dmg`：Apple Silicon Mac，316,176,384 bytes（约 316 MB）。
 - `.dmg.sha256`：安装包 SHA256 校验文件。
-- `安装说明.txt`：简要安装与模型连接说明。
+- `INSTALL.txt`：简要安装与模型连接说明。
 
 打开 DMG，将应用拖入 Applications。运行环境已包含；不需要额外安装 Python / Node。**不包含视觉模型权重、开发者 API Key、项目或收藏。**
 

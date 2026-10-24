@@ -15,4 +15,5 @@ hdiutil create -volname 'AI Mood Board Studio' -srcfolder "$STAGE" -ov -format U
 hdiutil verify "$DMG"
 (cd "$ROOT/releases"; shasum -a 256 "$(basename "$DMG")" > "$(basename "$DMG").sha256")
 cp "$ROOT/desktop/INSTALL.txt" "$ROOT/releases/安装说明.txt"
+cp "$ROOT/desktop/INSTALL.txt" "$ROOT/releases/INSTALL.txt"
 echo "$DMG"
