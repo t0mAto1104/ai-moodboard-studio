@@ -11,7 +11,7 @@ from app.layout.engine import RATIOS,validate_items
 async def export_project(p,format):
     items=validate_items(p['items'],p['ratio'],p['asset_ids'])
     if not items:raise ValueError('画布为空')
-    w,h=RATIOS[p['ratio']];canvas=Image.new('RGBA',(w,h),'#ffffff');manifest=[];loaded={}
+    w,h=RATIOS[p['ratio']];canvas=Image.new('RGBA',(w,h),p.get('background','#ffffff'));manifest=[];loaded={}
     # Verify every linked source before producing any output file.
     # Validate all permissions before any network event or fetch.
     checked={}
@@ -38,14 +38,26 @@ async def export_project(p,format):
             im=loaded[item['asset_id']]
             im=ImageOps.fit(im,(iw,ih)) if item['crop']['mode']=='cover' else ImageOps.contain(im,(iw,ih))
             layer.paste(im,((iw-im.width)//2,(ih-im.height)//2))
-        elif item['kind']=='color':layer.paste(item['fill'],(0,0,iw,ih))
+        elif item['kind']=='color':
+            if item['shape']=='ellipse':ImageDraw.Draw(layer).ellipse((0,0,iw-1,ih-1),fill=item['fill'])
+            else:layer.paste(item['fill'],(0,0,iw,ih))
         else:
-            font=ImageFont.load_default(size=24)
-            # macOS CJK font when available.
-            from pathlib import Path
-            for f in ('/System/Library/Fonts/PingFang.ttc','/System/Library/Fonts/STHeiti Light.ttc'):
-                if Path(f).exists():font=ImageFont.truetype(f,24);break
-            ImageDraw.Draw(layer).text((2,2),item['text'],font=font,fill=item['fill'])
+            font=editor_font(item)
+            draw=ImageDraw.Draw(layer)
+            lines=[]
+            # Wrap by glyph width, supporting both CJK and Latin text without external fonts.
+            for paragraph in item['text'].split('\n'):
+                line=''
+                for char in paragraph:
+                    if line and draw.textlength(line+char,font=font)>iw:
+                        lines.append(line);line=''
+                    line+=char
+                lines.append(line)
+            visible_rows=int(ih/(item['font_size']*item['line_height']))
+            for row,line in enumerate(lines[:visible_rows]):
+                length=draw.textlength(line,font=font)
+                x={'left':0,'center':(iw-length)/2,'right':iw-length}[item['text_align']]
+                draw.text((x,row*item['font_size']*item['line_height']),line,font=font,fill=item['fill'],anchor='lt',stroke_width=1 if item['font_weight']=='bold' and any(ord(c)>0x2e80 for c in line) else 0)
         layer.putalpha(layer.getchannel('A').point(lambda v:round(v*item['opacity'])))
         layer=layer.rotate(-item['rotation'],expand=True,resample=Image.Resampling.BICUBIC)
         canvas.alpha_composite(layer,(round(item['x']+iw/2-layer.width/2),round(item['y']+ih/2-layer.height/2)))
@@ -56,3 +68,20 @@ async def export_project(p,format):
         z.writestr('moodboard.'+format,b.getvalue());z.writestr('license-manifest.json',json.dumps(manifest,ensure_ascii=False,indent=2));z.writestr('attribution.txt','\n\n'.join(m['attribution']+'\n'+m['author_url']+'\n'+m['source']+'\n'+m['license_url']+'\nModified: '+m['modification'] for m in manifest))
     store.put('export_records',id,{'id':id,'project_id':p['id'],'format':format,'filename':path.name})
     return {'id':id,'url':'/api/exports/'+id,'format':format}
+
+
+def editor_font(item):
+    size=round(item['font_size'])
+    bold=item['font_weight']=='bold'
+    families={
+        'sans':['/System/Library/Fonts/Helvetica.ttc','DejaVuSans-Bold.ttf' if bold else 'DejaVuSans.ttf'],
+        'serif':['/System/Library/Fonts/Times.ttc','DejaVuSerif-Bold.ttf' if bold else 'DejaVuSerif.ttf'],
+        'mono':['/System/Library/Fonts/Menlo.ttc','DejaVuSansMono-Bold.ttf' if bold else 'DejaVuSansMono.ttf'],
+    }
+    paths=families[item['font_family']]
+    if any(ord(c)>0x2e80 for c in item['text']):
+        paths=['/System/Library/Fonts/PingFang.ttc','/System/Library/Fonts/STHeiti Light.ttc']+paths
+    for path in paths:
+        try:return ImageFont.truetype(path,size,index=1 if bold and path.endswith('Helvetica.ttc') else 0)
+        except (OSError,ValueError):continue
+    return ImageFont.load_default(size=size)

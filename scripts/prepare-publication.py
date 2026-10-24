@@ -13,7 +13,7 @@ SKIP_PARTS = {'.git', '.local', '.venv', '.model-tools', '.build', '.publish', '
               'dist', '__pycache__', '.pytest_cache', '.cache'}
 REPORTS = {'benchmark-metadata.json', 'benchmark-siglip2.json', 'benchmark-siglip2-mps.json',
            'desktop-release-report.json', 'desktop-model-test.json', 'desktop-mps-test.json',
-           'desktop-dmg-test.json', 'package-audit.json', 'openverse-contract.json', 'stock-export-live.json', 'desktop-frozen-test.json'}
+           'desktop-dmg-test.json', 'package-audit.json', 'openverse-contract.json', 'stock-export-live.json', 'desktop-frozen-test.json', 'desktop-020-frozen-test.json', 'desktop-020-dmg-test.json', 'desktop-020-model-test.json'}
 
 def clean(value):
     if isinstance(value, dict): return {k: clean(v) for k, v in value.items()}
@@ -48,9 +48,10 @@ def export(destination):
     (destination/'docs/progress.md').write_text(
         '# Public development record\n\n'
         '2026-10-24: Local MVP and Apple Silicon desktop preview completed. '
-        'Backend 67 tests, frontend 11 tests, production build, isolated Mock workflow, '
-        'native window lifecycle, read-only DMG relocation and external SigLIP CPU/MPS encoding passed. '
+        'Backend 69 tests, frontend 18 tests, production build, isolated Mock workflow, '
+        'native window lifecycle, read-only DMG relocation and external SigLIP MPS encoding passed. Historical CPU validation remains in the earlier reports. '
         'Private development logs and live user-data reports are intentionally excluded.\n\n'
+        '2026-10-24: v0.2.0 adds favorites-to-board creation and editor tools. See release-0.2.0.md for current installer validation.\n\n'
         'See validation.md, CHANGELOG.md and known-limitations.md for scope and remaining work.\n')
     return destination
 

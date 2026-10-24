@@ -87,5 +87,11 @@ class LayoutItem(BaseModel):
     opacity:float=Field(default=1,ge=0,le=1)
     attribution_reference:str=''
     locked:bool=False
-    text:str=''
+    text:str=Field(default='',max_length=5000)
     fill:str='#BFC9D3'
+    font_size:float=Field(default=24,ge=8,le=240)
+    font_family:Literal['sans','serif','mono']='sans'
+    font_weight:Literal['normal','bold']='normal'
+    text_align:Literal['left','center','right']='left'
+    line_height:float=Field(default=1.2,ge=1,le=3)
+    shape:Literal['rectangle','ellipse']='rectangle'

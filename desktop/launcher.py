@@ -69,6 +69,30 @@ def self_test(report_path,model_path=None):
                 data=archive.read('moodboard.'+fmt)
                 checks['export_'+fmt]=data.startswith(b'\x89PNG' if fmt=='png' else b'%PDF-')
                 checks['attribution_'+fmt]=bool(archive.read('attribution.txt'))
+        # Verify the favorites/editor release in the packaged runtime, without remote images.
+        from app.schemas.models import LayoutItem
+        from PIL import Image
+        chosen=[a['id'] for a in results['assets']]
+        manual=post('/projects',{'name':'Favorites editor check','intent':intent,'asset_ids':chosen,'from_selection':True})
+        checks['favorites_manual_board']={i['asset_id'] for i in manual['items']}==set(chosen) and manual['stats']['ranking_mode']=='manual'
+        styled=LayoutItem(id='editor-title',kind='text',x=40,y=40,width=500,height=120,text='Material study',font_size=42,font_weight='bold',text_align='center').model_dump()
+        shape=LayoutItem(id='editor-ellipse',kind='color',shape='ellipse',x=700,y=40,width=100,height=100,fill='#ff0000').model_dump()
+        response=client.patch('/api/projects/'+manual['id'],json={'items':manual['items']+[styled,shape],'background':'#123456'});response.raise_for_status()
+        reopened=client.get('/api/projects/'+manual['id']).json()
+        checks['editor_style_persistence']=reopened['background']=='#123456' and reopened['items'][-2]['font_size']==42 and reopened['items'][-1]['shape']=='ellipse'
+        for fmt in ('png','pdf'):
+            exported=job('/projects/'+manual['id']+'/export',{'format':fmt})
+            response=client.get(exported['url']);response.raise_for_status()
+            with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
+                payload=archive.read('moodboard.'+fmt)
+                checks['editor_export_'+fmt]=len(json.loads(archive.read('license-manifest.json')))==len(chosen) and bool(payload)
+                if fmt=='png':
+                    with Image.open(io.BytesIO(payload)) as im:
+                        checks['editor_background_and_shape']=im.getpixel((0,0))==(18,52,86) and im.getpixel((750,90))==(255,0,0)
+        unknown={**results['assets'][0],'id':'mock:unknown-editor-check','license_type':'Unknown'}
+        store.put('image_assets',unknown['id'],unknown)
+        rejected=client.post('/api/projects',json={'name':'Blocked reference','intent':intent,'asset_ids':[unknown['id']],'from_selection':True})
+        checks['editor_unknown_permission_blocked']=rejected.status_code==422
         # Exercise stock-license exports inside the frozen application too.
         # The network is explicitly mocked; no developer credentials are used.
         from unittest.mock import patch

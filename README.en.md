@@ -14,7 +14,7 @@ A local-first visual research workspace built with React, Konva, FastAPI and SQL
 
 ## Preview release
 
-Version 0.1.2 is available as a ~316 MB DMG for Apple Silicon Macs. Drag the app into Applications; no separate Python or Node installation is needed. Target macOS 14+, tested on macOS 15.8.1 / M3 only. Intel and Windows packages are not provided.
+Version 0.2.0 is available as a ~317 MB DMG for Apple Silicon Macs. Drag the app into Applications; no separate Python or Node installation is needed. Target macOS 14+, tested on macOS 15.8.1 / M3 only. Intel and Windows packages are not provided.
 
 The app is **ad-hoc signed, not Developer ID signed or notarized**. Other computers may block it. Formal distribution still needs signing, notarization and testing on additional machines. Do not disable system-wide security protections.
 
@@ -25,7 +25,7 @@ No model weights, developer API keys or existing user data are included. Each us
 1. Enable a source in Settings. For offline use, enable only the explicitly labeled demo source.
 2. Enter a Chinese or English design brief and edit the resulting search plan if needed.
 3. Browse results, inspect attribution and source permissions, and save references with tags.
-4. Create an Editorial Grid, Material Board or Creative Collage. Move, resize and replace images; add color swatches and text.
+4. Create a board from favorites or search results. Edit layouts with undo/redo, layers, locking, typography, color swatches and image replacement.
 5. Save projects locally. Export permitted boards as PNG/PDF ZIPs containing attribution and a license manifest.
 
 The demo source contains original procedural geometric fixtures, not real stock photographs or evidence of retrieval quality. Boards contain individually editable elements; they are not flattened AI-generated collages.
@@ -91,3 +91,7 @@ Recorded validation: 67 backend and 11 frontend tests; production build; standal
 [User guide](docs/user-guide.md) · [Architecture](docs/architecture.md) · [REST API](docs/api.md) · [Desktop build](docs/desktop-packaging.md) · [Contributing](CONTRIBUTING.md).
 
 No application source-code license has been selected yet. Public visibility alone does not grant a redistribution license. Third-party dependencies, models and images retain their respective terms. See [NOTICE](NOTICE.md).
+
+## Favorites and editor
+
+Create a board from 1–24 saved images across tags. The editor adds undo/redo, layers and locking, typography, shapes, alignment, keyboard shortcuts, favorites insertion and zoom. Styling, background and canvas ratio persist and export to PNG/PDF with source manifests. See [editor guide](docs/editor-guide.md) and [release validation](docs/release-0.2.0.md). Single-page boards only; grouping, collaboration and arbitrary crop focus are not implemented.

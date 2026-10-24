@@ -1,4 +1,4 @@
-AI Mood Board Studio 0.1.2 — macOS Apple Silicon
+AI Mood Board Studio 0.2.0 — macOS Apple Silicon
 
 将 AI Mood Board Studio.app 拖到 Applications，然后从“应用程序”打开。
 本包包含 Python、Web 界面和推理运行依赖，无需另行安装 Python 或 Node。

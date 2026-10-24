@@ -1,0 +1,20 @@
+import {render,screen,fireEvent,waitFor} from '@testing-library/react';
+import {it,expect,vi} from 'vitest';
+import {QueryClient,QueryClientProvider} from '@tanstack/react-query';
+import Home from './Home';
+it('creates a chosen collection as a board with explicit layout and excludes restricted images',async()=>{
+ const a={id:'a',title:'Silver material',provider:'mock',allowed_export:true,allowed_temporary_analysis:true};
+ const b={id:'b',title:'Unknown source',provider:'openverse',allowed_export:false,allowed_temporary_analysis:false};
+ vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,json:async()=>({tags:[{id:'metal',name:'金属'}],favorites:[{asset_id:'a',asset:a,tag_ids:['metal']},{asset_id:'b',asset:b,tag_ids:[]}]})})));
+ const onCreate=vi.fn(async()=>{});
+ render(<QueryClientProvider client={new QueryClient({defaultOptions:{queries:{retry:false}}})}><Home onDetails={vi.fn()} onGroup={vi.fn()} onNotify={vi.fn()} onSearch={vi.fn()} onCreate={onCreate}/></QueryClientProvider>);
+ fireEvent.click(await screen.findByRole('button',{name:'制作画板'}));
+ expect(screen.getByRole('button',{name:'选择图片：Unknown source'})).toBeDisabled();
+ fireEvent.click(screen.getByRole('button',{name:'选择图片：Silver material'}));
+ fireEvent.click(screen.getByRole('button',{name:'创建画板'}));
+ fireEvent.change(screen.getByLabelText('画板名称'),{target:{value:'金属探索'}});
+ fireEvent.change(screen.getByLabelText('画布比例'),{target:{value:'1:1'}});
+ fireEvent.click(screen.getByRole('button',{name:'拼贴'}));
+ fireEvent.click(screen.getByRole('button',{name:'使用 1 张图片创建'}));
+ await waitFor(()=>expect(onCreate).toHaveBeenCalledWith([a],{name:'金属探索',ratio:'1:1',layout_style:'collage'}));
+});

@@ -1,0 +1,25 @@
+import {render,screen,fireEvent,waitFor} from '@testing-library/react';
+import {QueryClient,QueryClientProvider} from '@tanstack/react-query';
+import {it,expect,vi} from 'vitest';
+import Editor from './Editor';
+import {useEditor} from '../store/editor';
+import type {Project} from '../types/models';
+vi.mock('../canvas/Board',()=>({default:()=>null}));
+it('edits text, supports keyboard undo/redo, and saves complete style metadata',async()=>{
+ const p={id:'p',name:'Board',ratio:'16:9',background:'#ffffff',items:[],assets:[]} as unknown as Project;
+ useEditor.getState().load(p);
+ const calls:any[]=[];
+ vi.stubGlobal('fetch',vi.fn(async(url,options)=>{if(options?.method==='PATCH')calls.push(JSON.parse(options.body));return {ok:true,json:async()=>url==='/api/library'?{favorites:[],tags:[]}:p}}));
+ render(<QueryClientProvider client={new QueryClient()}><Editor project={p} onReload={vi.fn()}/></QueryClientProvider>);
+ fireEvent.click(screen.getByRole('button',{name:'添加文字'}));
+ fireEvent.change(screen.getByLabelText('文字内容'),{target:{value:'Industrial design'}});
+ fireEvent.change(screen.getByLabelText('字号'),{target:{value:'48'}});
+ fireEvent.click(screen.getByRole('button',{name:'加粗'}));
+ expect(useEditor.getState().items[0].font_weight).toBe('bold');
+ fireEvent.keyDown(window,{key:'z',metaKey:true});expect(useEditor.getState().items[0].font_weight).toBe('normal');
+ fireEvent.keyDown(window,{key:'z',metaKey:true,shiftKey:true});expect(useEditor.getState().items[0].font_weight).toBe('bold');
+ fireEvent.click(screen.getByRole('button',{name:'保存'}));
+ await waitFor(()=>expect(calls).toHaveLength(1));
+ expect(calls[0].items[0]).toMatchObject({text:'Industrial design',font_size:48,font_weight:'bold'});
+ await waitFor(()=>expect(useEditor.getState().dirty).toBe(false));
+});

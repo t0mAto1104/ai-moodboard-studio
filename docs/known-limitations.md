@@ -13,3 +13,5 @@
 - Runtime package versions are recorded for this Mac; other operating systems not verified. Vite emits a bundle-size warning; test tooling emits an upstream httpx deprecation warning.
 - Desktop release is ad-hoc signed, not Developer ID signed/notarized. Only the recorded Apple Silicon/macOS host was tested; no Intel/Windows package, automatic updates or automatic migration from developer data.
 - No in-app one-click model installer yet. The opt-in scripts/install_vision_model.py CLI now prepares and verifies the supported fixed-version model folder and manifest; the app never silently downloads weights.
+
+- v0.2.0 editor is single-page. No grouping, shared mouse dragging of multiple elements, arbitrary crop focus, background removal, custom font upload, collaboration or autosave. Text export uses installed system fonts; minor browser/Pillow metric differences are possible.

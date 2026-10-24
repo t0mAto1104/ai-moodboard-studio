@@ -1,6 +1,16 @@
 # Changelog
 
-## Unreleased — documentation and model preparation
+## 0.2.0 — 2026-10-24
+
+- Create editable boards directly from 1–24 favorites across custom tags, retaining every chosen image without AI re-selection.
+- Add undo/redo, multi-selection actions, layers, locking, ordering, alignment, keyboard shortcuts and fit/zoom controls.
+- Add text typography, rectangles/ellipses, background and ratio editing, image replacement, favorites insertion and uploads.
+- Persist editor styling and render it in permission-checked PNG/PDF exports with attribution and license manifests.
+- Preserve the existing white Studio design and navigation; no Canva integration or private templates.
+- Add editor regression coverage and frozen-runtime tests. Existing projects use backward-compatible defaults.
+- Publish a refreshed Apple Silicon desktop preview without model weights or user data; still ad-hoc signed, not notarized.
+
+### Documentation and model preparation
 
 - Add Chinese/English homepage instructions for fixed-version SigLIP setup and image API credential registration.
 - Add an explicit model preparation CLI with pinned file hashes, external cache paths, safe resumption and read-only verification; five isolated tests passed. The desktop app still never auto-downloads weights.

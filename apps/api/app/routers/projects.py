@@ -17,9 +17,11 @@ class ProjectCreate(BaseModel):
     ratio:Literal['16:9','4:3','1:1','A4']='16:9'
     layout_style:Literal['editorial','material','collage']='editorial'
     commercial:bool=True
+    from_selection:bool=False
 class ProjectPatch(BaseModel):
     name:str|None=Field(default=None,min_length=1,max_length=100)
     items:list[LayoutItem]|None=None
+    background:str|None=Field(default=None,pattern=r'^#[0-9a-fA-F]{6}$')
     asset_ids:list[str]|None=Field(default=None,max_length=200)
     ratio:Literal['16:9','4:3','1:1','A4']|None=None
     layout_style:Literal['editorial','material','collage']|None=None
@@ -39,9 +41,20 @@ def save(p):
     for item in p['items']:store.put('layout_items',p['id']+':'+item['id'],{'project_id':p['id'],**item})
     return p
 @router.post('')
-def create(r:ProjectCreate):
+async def create(r:ProjectCreate):
+    if len(set(r.asset_ids))!=len(r.asset_ids):raise HTTPException(422,'素材重复')
     if any(not store.get('image_assets',id) for id in r.asset_ids):raise HTTPException(422,'素材不存在')
-    return save({'id':str(uuid.uuid4()),**r.model_dump(),'items':[],'created_at':time.time(),'stats':{}})
+    items=[]
+    if r.from_selection:
+        from app.pipeline.license_filter import policy
+        if not 1<=len(r.asset_ids)<=24:raise HTTPException(422,'请选择 1–24 张图片')
+        assets=[policy.apply(ImageAsset(**store.get('image_assets',aid)),r.commercial) for aid in r.asset_ids]
+        if any(not (a.allowed_transform or a.allowed_reference_board) for a in assets):
+            raise HTTPException(422,'部分素材尚未获准用于画板，请查看来源许可')
+        items=layout(assets,r.layout_style,r.ratio,r.intent.target_palette)
+        try:await track_references(items,[])
+        except ValueError as e:raise HTTPException(502,str(e))
+    return save({'id':str(uuid.uuid4()),**r.model_dump(exclude={'from_selection'}),'items':items,'background':'#ffffff','created_at':time.time(),'stats':{'ranking_mode':'manual'} if r.from_selection else {}})
 @router.get('')
 def listing():return [get(p['id']) for p in store.all_rows('projects')]
 @router.get('/{id}')
