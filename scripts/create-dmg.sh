@@ -10,7 +10,7 @@ ditto "$APP" "$STAGE/AI Mood Board Studio.app"
 ln -s /Applications "$STAGE/Applications"
 cp "$ROOT/desktop/INSTALL.txt" "$STAGE/安装说明.txt"
 mkdir -p "$ROOT/releases"
-DMG="$ROOT/releases/AI-Mood-Board-Studio-0.1.1-macOS-arm64.dmg"
+DMG="$ROOT/releases/AI-Mood-Board-Studio-0.1.2-macOS-arm64.dmg"
 hdiutil create -volname 'AI Mood Board Studio' -srcfolder "$STAGE" -ov -format UDZO "$DMG"
 hdiutil verify "$DMG"
 (cd "$ROOT/releases"; shasum -a 256 "$(basename "$DMG")" > "$(basename "$DMG").sha256")

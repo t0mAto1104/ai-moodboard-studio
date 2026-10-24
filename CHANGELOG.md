@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 — 2026-10-24
+
+- Includes the 0.1.1 licensed stock export fix.
+- Re-evaluate project-list thumbnails as well as the editor, so saved Pixabay references consistently use local previews.
+
 ## 0.1.1 — 2026-10-24
 
 - Enable licensed Unsplash / Pixabay creative-board PNG/PDF exports, with complete attribution and manifests.

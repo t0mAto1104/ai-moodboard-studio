@@ -14,7 +14,7 @@ A local-first visual research workspace built with React, Konva, FastAPI and SQL
 
 ## Preview release
 
-Version 0.1.1 is available as a ~317 MB DMG for Apple Silicon Macs. Drag the app into Applications; no separate Python or Node installation is needed. Target macOS 14+, tested on macOS 15.8.1 / M3 only. Intel and Windows packages are not provided.
+Version 0.1.2 is available as a ~316 MB DMG for Apple Silicon Macs. Drag the app into Applications; no separate Python or Node installation is needed. Target macOS 14+, tested on macOS 15.8.1 / M3 only. Intel and Windows packages are not provided.
 
 The app is **ad-hoc signed, not Developer ID signed or notarized**. Other computers may block it. Formal distribution still needs signing, notarization and testing on additional machines. Do not disable system-wide security protections.
 

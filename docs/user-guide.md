@@ -9,7 +9,7 @@
 每份 Release 附 SHA256 校验文件。将 DMG 和 `.dmg.sha256` 放在同一目录，再执行：
 
 ```sh
-shasum -a 256 -c AI-Mood-Board-Studio-0.1.1-macOS-arm64.dmg.sha256
+shasum -a 256 -c AI-Mood-Board-Studio-0.1.2-macOS-arm64.dmg.sha256
 ```
 
 ## 无账号体验

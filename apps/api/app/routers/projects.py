@@ -43,7 +43,7 @@ def create(r:ProjectCreate):
     if any(not store.get('image_assets',id) for id in r.asset_ids):raise HTTPException(422,'素材不存在')
     return save({'id':str(uuid.uuid4()),**r.model_dump(),'items':[],'created_at':time.time(),'stats':{}})
 @router.get('')
-def listing():return [{**p,'assets':[a for aid in p['asset_ids'] if (a:=store.get('image_assets',aid))]} for p in store.all_rows('projects')]
+def listing():return [get(p['id']) for p in store.all_rows('projects')]
 @router.get('/{id}')
 def get(id:str):
     from app.pipeline.license_filter import policy

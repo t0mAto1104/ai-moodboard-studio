@@ -88,5 +88,9 @@ def test_pixabay_board_preview_is_local_and_does_not_grant_analysis(monkeypatch)
     a=stock('pixabay');store.put('image_assets',a.id,a.model_dump())
     async def fetch(url):return fixture_bytes(1)
     monkeypatch.setattr(asset_router,'fetch_image',fetch)
-    with TestClient(app) as c:assert c.get('/api/assets/'+a.id+'/image').status_code==200
+    store.put('projects','pixabay-preview',{'id':'pixabay-preview','asset_ids':[a.id],'items':layout([a]),'ratio':'16:9'})
+    with TestClient(app) as c:
+        assert c.get('/api/assets/'+a.id+'/image').status_code==200
+        project=next(p for p in c.get('/api/projects').json() if p['id']=='pixabay-preview')
+        assert project['assets'][0]['allowed_export'] and not project['assets'][0]['display_url']
     assert not policy.apply(a).allowed_temporary_analysis

@@ -14,7 +14,7 @@ A local-first visual research workspace with editable mood boards.
 
 AI Mood Board Studio 将图片检索、标签收藏、本地视觉排序和可编辑画布放在同一个纯白工作区。核心流程在本机运行；云端大语言模型是可选项。
 
-> **0.1.1 预览版** · Apple Silicon Mac · 安装包约 317 MB · 不含视觉模型、开发者密钥或用户数据 · 尚未完成 Apple Developer ID 签名和公证。
+> **0.1.2 预览版** · Apple Silicon Mac · 安装包约 316 MB · 不含视觉模型、开发者密钥或用户数据 · 尚未完成 Apple Developer ID 签名和公证。
 
 ## 可以做什么
 

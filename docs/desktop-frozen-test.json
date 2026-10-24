@@ -23,7 +23,7 @@
     "model_absent_by_default": true
   },
   "desktop": true,
-  "data_dir": "/private/tmp/moodboard-011-frozen-data",
+  "data_dir": "/private/tmp/moodboard-012-frozen-data",
   "resource_root": "/Users/LOCAL_USER/Documents/ChatGPT/AI mood board/ai-moodboard-studio/.build/dist/AI Mood Board Studio.app/Contents/Frameworks/studio",
   "architecture": "arm64",
   "python": "3.12.7"
